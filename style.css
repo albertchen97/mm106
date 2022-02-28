@@ -1,0 +1,50 @@
+
+*{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 28px;
+    text-align: center;
+}
+body::before{
+    content: "";
+    background-image: url("background.jpg");
+    opacity: 0.5;
+    background-size: cover;
+    position:fixed;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    z-index: -1;
+}
+/* header,
+nav,
+section,
+aside,
+footer{
+    margin: 5px;;
+    padding: 5px;
+    text-align: center;
+    border-radius: 5px;
+}
+section
+{
+    float: left;
+    width: calc(50% - 100px);
+    margin: 0 50px 50px 50px;
+    width: 100%;
+    background-color: #E0E0E0;
+    border-radius: 5px;
+    padding: 50px;
+} */
+
+/* aside
+{
+  float: right;
+}
+nav ul
+{
+  list-style-type:none;
+  padding: 20px;
+  margin-bottom: 0;
+   */
+}
