@@ -1,13 +1,18 @@
 
 *{
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 28px;
+    font-family: 'Courier New', Courier, monospace;
     text-align: center;
+}
+*, :after, :before {
+    box-sizing: border-box;
+}
+div {
+    display: block;
 }
 body::before{
     content: "";
     background-image: url("background.jpg");
-    opacity: 0.5;
+    opacity: 0.6;
     background-size: cover;
     position:fixed;
     top: 0px;
@@ -16,35 +21,94 @@ body::before{
     left: 0px;
     z-index: -1;
 }
-/* header,
-nav,
-section,
-aside,
-footer{
-    margin: 5px;;
-    padding: 5px;
-    text-align: center;
-    border-radius: 5px;
-}
-section
-{
-    float: left;
-    width: calc(50% - 100px);
-    margin: 0 50px 50px 50px;
-    width: 100%;
-    background-color: #E0E0E0;
-    border-radius: 5px;
-    padding: 50px;
-} */
+body{
+    font-size: 1.2rem;
+    margin: 0 auto;
+    padding: 0;
+    letter-spacing: 1px;
 
-/* aside
-{
-  float: right;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    text-align: left;
 }
-nav ul
-{
-  list-style-type:none;
-  padding: 20px;
-  margin-bottom: 0;
-   */
+.landing{
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+}
+.content-background{
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50%;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 540px;
+    box-shadow: 0 7px 26px 0 rgb(0, 0, 0,1);
+}
+.landing,.content-wrapper{
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    padding: 10px 0 0;
+    margin: 0 auto;
+}
+.content,.content-wrapper{
+    width: 100%;
+    flex: 1;
+}
+.content{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 0;
+    min-height: 100vh;
+    min-height: calc(100vh - var(--vh-offset, 0px));
+    box-sizing: border-box;
+}
+.navigation{
+    padding-bottom: 35px;
+}
+.navigation-list-wrapper{
+    padding-top: 2rem;
+
+}
+a{
+    background: rgb(35, 36, 41);
+    width: 100%;
+    flex:1;
+
+    overflow: hidden;
+    border-radius: 12px;
+
+    box-sizing: border-box;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    min-height: 60px;
+    display: inline-block;
+
+    color: white;
+    text-decoration: none;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 15px;
+}
+
+a:hover{
+    opacity: 0.6;
+}
+
+.footer{
+    padding-bottom: 2rem;
+    font-size: 0.7rem;
 }
