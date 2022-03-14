@@ -22,7 +22,13 @@
                 </nav>
                 <section class="resume">
                     <figure class="avatar">
-                        <img width="40%" src="avatar.png" srcset="avatar.png 800w, avatar_small.jpg 600w, avatar_small.jpg 400w" alt="Haoze's Avatar">
+                        <picture>
+                            <source srcset="avatar.png" media="(min-width: 800px)">
+                            <source srcset="avatar_small.jpg" media="(min-width: 600px)">
+                            <source srcset="avatar_small.jpg" media="(min-width: 400px)">
+                            <img width="40%" src="avatar.png" alt="Haoze's Avatar">
+                        </picture>
+
                     </figure>
                     <header class="header">
                         <h2>Haoze Chen</h2>
