@@ -171,9 +171,4 @@ a:hover{
     a,header,.navigation{
         font-size: 0.4rem;
     }
-    .avatar{
-        display: flex;
-        flex:1;
-        flex-direction: column;
-    }
 }
