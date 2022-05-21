@@ -1,50 +1,138 @@
-function SaveItem(){
-    var name = document.forms.ShoppingList.name.value;
-    var data = document.forms.ShoppingList.data.value;
-    localStorage.setItem(name, data);
-    ShowAll();
+const catImage = document.getElementById('cat-img');
+const catButton = document.getElementById('btn-cat');
+
+catButton.addEventListener('click', fetchCatImage);
+
+function fetchCatImage(){
+    fetch('https://api.thecatapi.com/v1/images/search')
+    .then(response => response.json())
+    .then(data => {
+      catImage.innerHTML = `<img src="${data[0].url}"/>`;
+  })  
 }
 
-function ModifyItem(){
-    var name = document.forms.ShoppingList.name.value;
-    document.forms.ShoppingList.data.value = localStorage.getItem(name);
-    localStorage.getItem(name)
-    ShowAll();
-}
-
-function RemoveItem(){
-    var name = document.forms.ShoppingList.name.value;
-    document.forms.ShoppingList.data.value = localStorage.removeItem(name);
-    localStorage.removeItem(name);
-    ShowAll();
-}
-
-function ClearAll(){
-    localStorage.clear();
-    ShowAll();
-}
-
-function ShowAll(){
-    if (CheckBrowser()){
-        var key = "";
-        var list = "";
-        var i = 0;
-        for (i = 0; i <= localStorage.length - 1; i++){
-            key = localStorage.key(i);
-            list += "<tr><td>" + key + "</td>\n<td>" + localStorage.getItem(key) + "</td></tr>\n";
-        }
-        document.getElementById('list').innerHTML = list;
-    }else{
-        alert("Cannot store shopping list. Your browswer does not support local storage.")
+class Calculator {
+    constructor(previousOperandTextElement, currentOperandTextElement) {
+      this.previousOperandTextElement = previousOperandTextElement
+      this.currentOperandTextElement = currentOperandTextElement
+      this.clear()
     }
-}
-
-function CheckBrowser(){
-    if('localStorage' in window && window ['localStorage'] !== null){
-        // we can use local storage
-        console.log('local storage works');
-        return true;
-    }else{
-        return false;
+  
+    clear() {
+      this.currentOperand = ''
+      this.previousOperand = ''
+      this.operation = undefined
     }
-}
+  
+    delete() {
+      this.currentOperand = this.currentOperand.toString().slice(0, -1)
+    }
+  
+    appendNumber(number) {
+      if (number === '.' && this.currentOperand.includes('.')) return
+      this.currentOperand = this.currentOperand.toString() + number.toString()
+    }
+  
+    chooseOperation(operation) {
+      if (this.currentOperand === '') return
+      if (this.previousOperand !== '') {
+        this.compute()
+      }
+      this.operation = operation
+      this.previousOperand = this.currentOperand
+      this.currentOperand = ''
+    }
+  
+    compute() {
+      let computation
+      const prev = parseFloat(this.previousOperand)
+      const current = parseFloat(this.currentOperand)
+      if (isNaN(prev) || isNaN(current)) return
+      switch (this.operation) {
+        case '+':
+          computation = prev + current
+          break
+        case '-':
+          computation = prev - current
+          break
+        case '*':
+          computation = prev * current
+          break
+        case '÷':
+          computation = prev / current
+          break
+        default:
+          return
+      }
+      this.currentOperand = computation
+      this.operation = undefined
+      this.previousOperand = ''
+    }
+  
+    getDisplayNumber(number) {
+      const stringNumber = number.toString()
+      const integerDigits = parseFloat(stringNumber.split('.')[0])
+      const decimalDigits = stringNumber.split('.')[1]
+      let integerDisplay
+      if (isNaN(integerDigits)) {
+        integerDisplay = '0'
+      } else {
+        integerDisplay = integerDigits.toLocaleString('en', { maximumFractionDigits: 0 })
+      }
+      if (decimalDigits != null) {
+        return `${integerDisplay}.${decimalDigits}`
+      } else {
+        return integerDisplay
+      }
+    }
+  
+    updateDisplay() {
+      this.currentOperandTextElement.innerText =
+        this.getDisplayNumber(this.currentOperand)
+      if (this.operation != null) {
+        this.previousOperandTextElement.innerText =
+          `${this.getDisplayNumber(this.previousOperand)} ${this.operation}`
+      } else {
+        this.previousOperandTextElement.innerText = ''
+      }
+    }
+  }
+  
+  const numberButtons = document.querySelectorAll('[data-number]')
+  const operationButtons = document.querySelectorAll('[data-operation]')
+  const equalsButton = document.querySelector('[data-equals]')
+  const deleteButton = document.querySelector('[data-delete]')
+  const allClearButton = document.querySelector('[data-all-clear]')
+  const previousOperandTextElement = document.querySelector('[data-previous-operand]')
+  const currentOperandTextElement = document.querySelector('[data-current-operand]')
+  
+  const calculator = new Calculator(previousOperandTextElement, currentOperandTextElement)
+  
+  numberButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      calculator.appendNumber(button.innerText)
+      calculator.updateDisplay()
+    })
+  })
+  
+  operationButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      calculator.chooseOperation(button.innerText)
+      calculator.updateDisplay()
+    })
+  })
+  
+  equalsButton.addEventListener('click', button => {
+    calculator.compute()
+    calculator.updateDisplay()
+  })
+  
+  allClearButton.addEventListener('click', button => {
+    calculator.clear()
+    calculator.updateDisplay()
+  })
+  
+  deleteButton.addEventListener('click', button => {
+    calculator.delete()
+    calculator.updateDisplay()
+  })
